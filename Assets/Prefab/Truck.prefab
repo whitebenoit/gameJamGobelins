@@ -9,20 +9,20 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1178502582520036}
+  m_RootGameObject: {fileID: 1515571882527002}
   m_IsPrefabParent: 1
---- !u!1 &1178502582520036
+--- !u!1 &1515571882527002
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4150343153542198}
-  - component: {fileID: 212899364422750254}
-  - component: {fileID: 50217003624523268}
-  - component: {fileID: 60380838044431904}
-  - component: {fileID: 114961263592973982}
+  - component: {fileID: 4621571097473426}
+  - component: {fileID: 212580442342928754}
+  - component: {fileID: 50818711822375426}
+  - component: {fileID: 60835067229148126}
+  - component: {fileID: 114493516505025892}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -30,12 +30,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4150343153542198
+--- !u!4 &4621571097473426
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178502582520036}
+  m_GameObject: {fileID: 1515571882527002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5659541, y: -3.7206624, z: 0.101523116}
   m_LocalScale: {x: 4, y: 8, z: 1}
@@ -43,13 +43,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50217003624523268
+--- !u!50 &50818711822375426
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178502582520036}
+  m_GameObject: {fileID: 1515571882527002}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -63,12 +63,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60380838044431904
+--- !u!60 &60835067229148126
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178502582520036}
+  m_GameObject: {fileID: 1515571882527002}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -93,23 +93,28 @@ PolygonCollider2D:
       - {x: 0.08, y: -0.06}
       - {x: 0.08, y: 0.07}
       - {x: 0.055, y: 0.08}
---- !u!114 &114961263592973982
+--- !u!114 &114493516505025892
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178502582520036}
+  m_GameObject: {fileID: 1515571882527002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f26d202293212774dadec1703095c981, type: 3}
+  m_Script: {fileID: 11500000, guid: f4fabb87479c084429e9df22931abd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212899364422750254
+  speed: 20
+  carSize: 20
+  nonDirecSpeedReduc: 0.2
+  wheelMaxAngle: 45
+  maxAngularVelocity: 20
+--- !u!212 &212580442342928754
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178502582520036}
+  m_GameObject: {fileID: 1515571882527002}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
