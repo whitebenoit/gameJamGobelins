@@ -26,13 +26,12 @@ public class Truck_Controller : MonoBehaviour
     private int indexMaxCurrVelocity        = 10;
     private float[] oldVelocityMagnitude    = new float[10];
     private static float MAX_SPEED          = 2.5f;
-    private float mediumPastVeloMagn        = 0;
+    private float passiveAgiReduction       = 0.01f;
+    private float agiSpeedInfluence         = 0.1f;
+    private float DeltaVInfluence           = 0.05f;
 
     [Header("AGITATION PROPERTIES")]
-    private float passiveAgiReduction       = 0.01f;
-    public float agiSpeedInfluence          = 0.1f;
-    public float DeltaVInfluence            = 0.3f;
-    //public float ndpTailleReduc = 0.6f;
+    public float maxAgitation               = 1.0f;
     public float reducMaxNPD                = 0.2f;
     public float augmentMaxNDP              = 0.4f;
 
@@ -50,6 +49,8 @@ public class Truck_Controller : MonoBehaviour
         // Nid de poule
     private bool isIn_NDP = false;
     private string NDP_TAG = "NDP";
+    private bool isIn_GFR = false;
+    private string GFR_TAG = "GFR";
 
     [Header("OBSTACLES PROPERTIES")]
     [Range(0.0f, 2.0f)]
@@ -95,7 +96,6 @@ public class Truck_Controller : MonoBehaviour
         float scalRight = Vector2.Dot(transform.right, rb.velocity.normalized);
         Vector2 lateralDragForce = - nonDirecSpeedReduc * Mathf.Abs(normeVelo) * scalRight * transform.right * rb.mass;
         rb.AddForce(lateralDragForce);
-        Debug.Log("lateralDragForce :" + lateralDragForce + "/wheelForceFront"+ wheelForceFront);
 
 
 
@@ -113,21 +113,21 @@ public class Truck_Controller : MonoBehaviour
 
         // AGITATION CALCUL
         agitation = CalculateAgitation();
+        if(agitation > maxAgitation)
+        {
+
+        }
 
         //Debug.Log("velocity magnitude :" + rb.velocity.magnitude);
-        //Debug.Log("Agiation :" + agitation);
+        Debug.Log("Agiation :" + agitation);
 
     }
 
     private void LateUpdate()
     {
-       
         oldVelocityMagnitude[indexCurrentVelocity] = rb.velocity.magnitude;
         indexCurrentVelocity++;
         if (indexCurrentVelocity >= indexMaxCurrVelocity) indexCurrentVelocity = 0;
-        float sum = 0.0f;
-        foreach(float value in oldVelocityMagnitude) { sum += value; }
-        mediumPastVeloMagn = sum / indexMaxCurrVelocity;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -146,6 +146,7 @@ public class Truck_Controller : MonoBehaviour
         if (goTag == MUD_TAG) isIn_MUD = isIn;
         if (goTag == OIL_TAG) isIn_OIL = isIn;
         if (goTag == NDP_TAG) isIn_NDP = isIn;
+        if (goTag == GFR_TAG) isIn_GFR = isIn;
     }
 
     private float CalculateAgitation()
@@ -154,12 +155,12 @@ public class Truck_Controller : MonoBehaviour
             // RETURN New Value of the Agitation of the vehicule
         float newAgitation = 0;
             // Speed above which passive agitation increase
-        float speedForZero = MAX_SPEED/1.6f; 
+        float speedForZero = MAX_SPEED/1.15f; 
             // Velocity Magnitude of the truck
         float velocityMagnitude = rb.velocity.magnitude;
 
         // Passive Agitation calcul
-        float speedAgitation = agiSpeedInfluence * (Mathf.Log10((velocityMagnitude+0.1f) / (speedForZero)))/100;
+        float speedAgitation = agiSpeedInfluence * (Mathf.Log10((velocityMagnitude+0.1f) / (speedForZero)))/6;
 
         // Bump/ Nids de poule Agitation calcul
         float speedNDP = 0;
@@ -175,16 +176,20 @@ public class Truck_Controller : MonoBehaviour
         float maxDeltaV = 0.0f;
         foreach(float value in oldVelocityMagnitude)
         {
-            maxDeltaV = Mathf.Max(maxDeltaV, Mathf.Abs(value - velocityMagnitude));
+            maxDeltaV = Mathf.Max(maxDeltaV, Mathf.Abs(Mathf.Pow(1+value - velocityMagnitude,4))-1);
         }
-        speedDeltaV = DeltaVInfluence *maxDeltaV / MAX_SPEED;
+        speedDeltaV = DeltaVInfluence *maxDeltaV / Mathf.Pow(MAX_SPEED,4);
+        //Debug.Log("speedDeltaV :" + speedDeltaV + "/ speedAgitation:"+ speedAgitation);
 
         // New Agitation is All the other speed
-        Debug.Log("passiveAgiReduction" + passiveAgiReduction);
         newAgitation = Mathf.Max(0, agitation + speedAgitation + speedDeltaV);
 
 
         return newAgitation;
     }
 
+    private void ExplosionNitro()
+    {
+        
+    }
 }
