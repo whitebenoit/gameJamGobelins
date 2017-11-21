@@ -603,9 +603,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 6735ffe0-b3ea-4695-86f6-e248efa989ea
-  projectName: NirtoTruck
-  organizationId: whitebenoit
+  cloudProjectId: a13b7c3c-c1a5-45b8-b7ef-27b7c6809d53
+  projectName: Xplosive Truck
+  organizationId: lebucu
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
