@@ -1,7 +1,9 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Truck_Controller : MonoBehaviour
 {
@@ -32,13 +34,17 @@ public class Truck_Controller : MonoBehaviour
 
     [Header("AGITATION PROPERTIES")]
     public float maxAgitation               = 1.0f;
-    public float reducMaxNPD                = 0.2f;
-    public float augmentMaxNDP              = 0.4f;
+    public float reducMaxNPD                = 0.02f;
+    public float augmentMaxNDP              = 0.01f;
 
 
 
     [Header("UI PROPERTIES")]
     public Canvas canvas;
+    public UnityEngine.UI.Image agitationBar;
+    public UnityEngine.UI.Image speedBar;
+    private float speedBarStratingAngle;
+    private float speedBarAngleAmplitude = 110.0f;
 
     //[HideInInspector]
     //public string ObstacleEffect;
@@ -68,6 +74,7 @@ public class Truck_Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         wheelAngle = 0.0f;
+        speedBarStratingAngle = speedBar.transform.eulerAngles.z;
     }
 
     private void FixedUpdate()
@@ -101,13 +108,13 @@ public class Truck_Controller : MonoBehaviour
 
         // TILES EFFECTS:
         // MUD EFFECTS
-        if (isIn_MUD) rb.AddForce(-mudDrag      * rb.velocity * 2 * speed);
+        if (isIn_MUD) rb.AddForce(-mudDrag * rb.velocity * 2 * rb.mass);
             // OIL EFFECTS
         if (isIn_OIL) oilDurationCooldown = oilDuration;
         if (oilDurationCooldown > 0)
         {
             oilDurationCooldown -= Time.fixedDeltaTime;
-            rb.AddForce(oilUnDrag * rb.velocity * speed);
+            rb.AddForce(oilUnDrag * rb.velocity * rb.mass);
             //Debug.Log("oilDurationCooldown :" + oilDurationCooldown);
         }
 
@@ -119,7 +126,12 @@ public class Truck_Controller : MonoBehaviour
         }
 
         //Debug.Log("velocity magnitude :" + rb.velocity.magnitude);
-        Debug.Log("Agiation :" + agitation);
+        //Debug.Log("Agiation :" + agitation);
+
+
+        // UI Function:
+        UpdateUI();
+
 
     }
 
@@ -168,7 +180,7 @@ public class Truck_Controller : MonoBehaviour
         {
             float speedNDPAugment   = augmentMaxNDP * (Mathf.Max(0, MAX_SPEED - Mathf.Abs(2 * velocityMagnitude -   MAX_SPEED)));
             float speedNDPReduc     = reducMaxNPD   * (Mathf.Min(0,-MAX_SPEED + Mathf.Abs(2 * velocityMagnitude -3* MAX_SPEED)));
-            speedNDP = speedNDPAugment + speedNDPReduc;
+            speedNDP = (speedNDPAugment + speedNDPReduc)/50;
         }
 
         // Delta Vitesse Agiation calcul
@@ -182,7 +194,7 @@ public class Truck_Controller : MonoBehaviour
         //Debug.Log("speedDeltaV :" + speedDeltaV + "/ speedAgitation:"+ speedAgitation);
 
         // New Agitation is All the other speed
-        newAgitation = Mathf.Max(0, agitation + speedAgitation + speedDeltaV);
+        newAgitation = Mathf.Max(0, agitation + (speedAgitation + speedDeltaV + speedNDP)/1.2f);
 
 
         return newAgitation;
@@ -191,5 +203,23 @@ public class Truck_Controller : MonoBehaviour
     private void ExplosionNitro()
     {
         
+    }
+
+
+    private void UpdateUI()
+    {
+        //agitationBar = canvas.GetComponentInChildren<UnityEngine.UI.Image>();
+        float ratioAgitation = agitation / maxAgitation;
+        agitationBar.fillAmount = ratioAgitation;
+        agitationBar.color = new Color(255, (int)(255 *(1 - ratioAgitation)), (int)(255 * (1 - ratioAgitation))) ;
+
+        float ratioSpeed = rb.velocity.magnitude / (3 * MAX_SPEED);
+        Vector3 speedBarEulerAngles = speedBar.rectTransform.eulerAngles;
+        speedBar.rectTransform.eulerAngles.Set(
+            speedBarEulerAngles.x,
+            speedBarEulerAngles.y,
+            speedBarStratingAngle - ratioSpeed*speedBarAngleAmplitude);
+
+        Debug.Log("ratioSpeed :" + ratioSpeed.ToString() + "/speedBarAngle -:" + (speedBarStratingAngle - ratioSpeed * speedBarAngleAmplitude).ToString());
     }
 }
