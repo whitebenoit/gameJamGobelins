@@ -10,6 +10,8 @@ public class Truck_Controller : MonoBehaviour
     // INTRINSIC PROPERTIES
     [Header("INTRINSIC PROPERTIES")]
     public float speed = 50;
+    private float originalSpeed;
+    private string nomTriggerSlow ="TriggerSlow";
     public float carSize = 20;
     // Lateral Drag
     public float nonDirecSpeedReduc = 0.20f;
@@ -83,6 +85,7 @@ public class Truck_Controller : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        originalSpeed = speed;
         wheelAngle = 0.0f;
         speedBarStratingAngle = speedBar.transform.eulerAngles.z;
 
@@ -174,11 +177,14 @@ public class Truck_Controller : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!string.IsNullOrEmpty(collision.gameObject.tag)) updatesIsInTiles(collision.gameObject, true);
+        if (!string.IsNullOrEmpty(collision.gameObject.name) && collision.gameObject.name == nomTriggerSlow) speed = 10;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!string.IsNullOrEmpty(collision.gameObject.tag)) updatesIsInTiles(collision.gameObject, false);
+
+        if (!string.IsNullOrEmpty(collision.gameObject.name) && collision.gameObject.name == nomTriggerSlow) speed = originalSpeed;
     }
 
     void updatesIsInTiles(GameObject go, bool isIn)
@@ -245,13 +251,12 @@ public class Truck_Controller : MonoBehaviour
         agitationBar.fillAmount = ratioAgitation;
         agitationBar.color = new Color(255, (int)(255 *(1 - ratioAgitation)), (int)(255 * (1 - ratioAgitation))) ;
 
-        float ratioSpeed = rb.velocity.magnitude / (3 * MAX_SPEED);
+        float ratioSpeed = rb.velocity.magnitude / (2.0f * MAX_SPEED);
         Vector3 speedBarEulerAngles = speedBar.rectTransform.eulerAngles;
-        speedBar.rectTransform.eulerAngles.Set(
+        speedBar.rectTransform.eulerAngles = new Vector3(
             speedBarEulerAngles.x,
             speedBarEulerAngles.y,
             speedBarStratingAngle - ratioSpeed*speedBarAngleAmplitude);
-
         //Debug.Log("ratioSpeed :" + ratioSpeed.ToString() + "/speedBarAngle -:" + (speedBarStratingAngle - ratioSpeed * speedBarAngleAmplitude).ToString());
     }
 }

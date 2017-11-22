@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: 20cf15af197af7d498f22724a33b45bc
   - enabled: 1
+    path: Assets/_Scenes/EXPLOSIVTRUCKLEVEL0DEBUT.unity
+    guid: c6a626cafebaf5a4cab371213c1e6261
+  - enabled: 1
     path: Assets/_Scenes/sceneDev_2.unity
     guid: 46701ea0b5d5ff847b675f3fd04e85f6

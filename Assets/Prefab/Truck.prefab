@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4627419021824704}
   - component: {fileID: 61797907272856440}
   - component: {fileID: 114139079238293780}
+  - component: {fileID: 114581442244669110}
   m_Layer: 0
   m_Name: Wheel_BR
   m_TagString: Untagged
@@ -38,8 +39,25 @@ GameObject:
   - component: {fileID: 4470687209958168}
   - component: {fileID: 61660983070948418}
   - component: {fileID: 114883789064533820}
+  - component: {fileID: 114832257577458026}
   m_Layer: 0
   m_Name: Wheel_TR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1468044156671196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4082242278771670}
+  - component: {fileID: 212394707359990994}
+  m_Layer: 0
+  m_Name: NT-Tileset-Trucks-Concrete-Final_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +96,7 @@ GameObject:
   - component: {fileID: 4862651435475640}
   - component: {fileID: 61771250614300618}
   - component: {fileID: 114369347950946564}
+  - component: {fileID: 114284493089598192}
   m_Layer: 0
   m_Name: Wheel_TL
   m_TagString: Untagged
@@ -95,6 +114,7 @@ GameObject:
   - component: {fileID: 4070316602229170}
   - component: {fileID: 61612732867971512}
   - component: {fileID: 114239878385599654}
+  - component: {fileID: 114654574276769098}
   m_Layer: 0
   m_Name: Wheel_BL
   m_TagString: Untagged
@@ -113,7 +133,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621571097473426}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4082242278771670
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468044156671196}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.01, y: -0.97, z: -0.101523116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4621571097473426}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4470687209958168
 Transform:
@@ -126,7 +159,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621571097473426}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4621571097473426
 Transform:
@@ -134,10 +167,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1515571882527002}
-  m_LocalRotation: {x: 0, y: 0, z: -0.016534254, w: 0.9998633}
-  m_LocalPosition: {x: 2.621212, y: 10.744162, z: 0.101523116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.05, y: -4.02, z: 0.101523116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4082242278771670}
   - {fileID: 4862651435475640}
   - {fileID: 4470687209958168}
   - {fileID: 4070316602229170}
@@ -156,7 +190,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621571097473426}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4862651435475640
 Transform:
@@ -169,7 +203,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621571097473426}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50818711822375426
 Rigidbody2D:
@@ -591,6 +625,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   truckParent: {fileID: 1515571882527002}
   index: 2
+--- !u!114 &114284493089598192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671814713005200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c65da023f761a74c8978e225c0802b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  truckParent: {fileID: 1515571882527002}
+  index: 0
 --- !u!114 &114369347950946564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -630,6 +677,32 @@ MonoBehaviour:
   mudDrag: 0.5
   oilUnDrag: 0.5
   oilDuration: 3
+--- !u!114 &114581442244669110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1262533894694832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c65da023f761a74c8978e225c0802b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  truckParent: {fileID: 1515571882527002}
+  index: 3
+--- !u!114 &114654574276769098
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687321873982456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c65da023f761a74c8978e225c0802b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  truckParent: {fileID: 1515571882527002}
+  index: 2
 --- !u!114 &114829421666794972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -648,6 +721,19 @@ MonoBehaviour:
     Source: {fileID: 82531781282654028}
   - TileName: NDP
     Source: {fileID: 82188723405486378}
+--- !u!114 &114832257577458026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288023465227652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c65da023f761a74c8978e225c0802b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  truckParent: {fileID: 1515571882527002}
+  index: 1
 --- !u!114 &114883789064533820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -661,6 +747,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   truckParent: {fileID: 1515571882527002}
   index: 1
+--- !u!212 &212394707359990994
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468044156671196}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1581868785
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300010, guid: 15de7410066e6084583d92c80e67fe83, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.1875, y: 1.53125}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!212 &212580442342928754
 SpriteRenderer:
   m_ObjectHideFlags: 1
