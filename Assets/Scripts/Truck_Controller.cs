@@ -13,6 +13,8 @@ public class Truck_Controller : MonoBehaviour
     public float speed = 50;
     private float originalSpeed;
     private string nomTriggerSlow ="TriggerSlow";
+    private string nomTriggerNextLevel = "TriggerNextLevel";
+    
     public float carSize = 20;
     // Lateral Drag
     public float nonDirecSpeedReduc = 0.20f;
@@ -196,6 +198,8 @@ public class Truck_Controller : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(collision.gameObject.tag)) updatesIsInTiles(collision.gameObject, true);
         if (!string.IsNullOrEmpty(collision.gameObject.name) && collision.gameObject.name == nomTriggerSlow) speed = 10;
+
+        if (!string.IsNullOrEmpty(collision.gameObject.name) && collision.gameObject.name == nomTriggerNextLevel) StartCoroutine(startNextLevel());
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -287,5 +291,10 @@ public class Truck_Controller : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(0);
+    }
+    private IEnumerator startNextLevel()
+    {
+        yield return new WaitForSeconds(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
