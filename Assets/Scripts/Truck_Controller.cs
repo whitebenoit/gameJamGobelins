@@ -18,6 +18,14 @@ public class Truck_Controller : MonoBehaviour
     public float wheelMaxAngle = 30;
     // Maximum Angular Velocity of the truck
     public float maxAngularVelocity = 20;
+    // Name of wheels
+    private GameObject wheel_TL;
+    private GameObject wheel_TR;
+    private GameObject wheel_BL;
+    private GameObject wheel_BR;
+    private GameObject[] wheels;
+    [HideInInspector]
+    public bool[] isWheelInGFR;
 
     private Rigidbody2D rb;
     private float wheelAngle;
@@ -45,6 +53,8 @@ public class Truck_Controller : MonoBehaviour
     public UnityEngine.UI.Image speedBar;
     private float speedBarStratingAngle;
     private float speedBarAngleAmplitude = 110.0f;
+    
+
 
     //[HideInInspector]
     //public string ObstacleEffect;
@@ -75,6 +85,13 @@ public class Truck_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         wheelAngle = 0.0f;
         speedBarStratingAngle = speedBar.transform.eulerAngles.z;
+
+        wheel_TL = rb.transform.Find("Wheel_TL").parent.gameObject;
+        wheel_TR = rb.transform.Find("Wheel_TR").parent.gameObject;
+        wheel_BL = rb.transform.Find("Wheel_BL").parent.gameObject;
+        wheel_BR = rb.transform.Find("Wheel_BR").parent.gameObject;
+        wheels = new GameObject[4] { wheel_TL, wheel_TR, wheel_BL, wheel_BR };
+        isWheelInGFR = new bool[4];
     }
 
     private void FixedUpdate()
@@ -107,7 +124,7 @@ public class Truck_Controller : MonoBehaviour
 
 
         // TILES EFFECTS:
-        // MUD EFFECTS
+            // MUD EFFECTS
         if (isIn_MUD) rb.AddForce(-mudDrag * rb.velocity * 2 * rb.mass);
             // OIL EFFECTS
         if (isIn_OIL) oilDurationCooldown = oilDuration;
@@ -115,14 +132,25 @@ public class Truck_Controller : MonoBehaviour
         {
             oilDurationCooldown -= Time.fixedDeltaTime;
             rb.AddForce(oilUnDrag * rb.velocity * rb.mass);
-            //Debug.Log("oilDurationCooldown :" + oilDurationCooldown);
         }
+
+        // GOUFFRE EFFECTS
+        int wheelActuallyInGouffre = 0;
+        foreach(bool isWheeIn in isWheelInGFR)
+        {
+            if (isWheeIn) wheelActuallyInGouffre++;
+        }
+        if (wheelActuallyInGouffre >= 2)
+        {
+            TruckFallInGouffre();
+        }
+
 
         // AGITATION CALCUL
         agitation = CalculateAgitation();
         if(agitation > maxAgitation)
         {
-
+            ExplosionNitro();
         }
 
         //Debug.Log("velocity magnitude :" + rb.velocity.magnitude);
@@ -134,6 +162,7 @@ public class Truck_Controller : MonoBehaviour
 
 
     }
+
 
     private void LateUpdate()
     {
@@ -205,6 +234,9 @@ public class Truck_Controller : MonoBehaviour
         
     }
 
+    private void TruckFallInGouffre()
+    {
+    }
 
     private void UpdateUI()
     {
@@ -220,6 +252,6 @@ public class Truck_Controller : MonoBehaviour
             speedBarEulerAngles.y,
             speedBarStratingAngle - ratioSpeed*speedBarAngleAmplitude);
 
-        Debug.Log("ratioSpeed :" + ratioSpeed.ToString() + "/speedBarAngle -:" + (speedBarStratingAngle - ratioSpeed * speedBarAngleAmplitude).ToString());
+        //Debug.Log("ratioSpeed :" + ratioSpeed.ToString() + "/speedBarAngle -:" + (speedBarStratingAngle - ratioSpeed * speedBarAngleAmplitude).ToString());
     }
 }
