@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Truck_Controller : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class Truck_Controller : MonoBehaviour
     private GameObject[] wheels;
     [HideInInspector]
     public bool[] isWheelInGFR;
+
+    public GameObject explosionAnimatorGO;
+    private Animator explosionAnimator;
+    private bool isDead = false;
 
     private Rigidbody2D rb;
     private float wheelAngle;
@@ -95,13 +100,26 @@ public class Truck_Controller : MonoBehaviour
         wheel_BR = rb.transform.Find("Wheel_BR").parent.gameObject;
         wheels = new GameObject[4] { wheel_TL, wheel_TR, wheel_BL, wheel_BR };
         isWheelInGFR = new bool[4];
+
+        explosionAnimator = explosionAnimatorGO.GetComponent<Animator>();
+        isDead = false;
     }
 
     private void FixedUpdate()
     {
         // Getting the inputs of the player
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal;
+        float moveVertical;
+        if (!isDead)
+        {
+            moveHorizontal = Input.GetAxis("Horizontal");
+            moveVertical = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            moveHorizontal = 0;
+            moveVertical = 0;
+        }
 
         // TRUCK MOVING
             // Making the "wheels" turn
@@ -237,11 +255,16 @@ public class Truck_Controller : MonoBehaviour
 
     private void ExplosionNitro()
     {
-        
+        explosionAnimator.SetBool("Explosion",true);
+        isDead = true;
+        StartCoroutine(waitThenStartScreen(3));
     }
 
     private void TruckFallInGouffre()
     {
+        explosionAnimator.SetBool("Explosion", true);
+        isDead = true;
+        StartCoroutine( waitThenStartScreen(3));
     }
 
     private void UpdateUI()
@@ -258,5 +281,11 @@ public class Truck_Controller : MonoBehaviour
             speedBarEulerAngles.y,
             speedBarStratingAngle - ratioSpeed*speedBarAngleAmplitude);
         //Debug.Log("ratioSpeed :" + ratioSpeed.ToString() + "/speedBarAngle -:" + (speedBarStratingAngle - ratioSpeed * speedBarAngleAmplitude).ToString());
+    }
+
+    private IEnumerator waitThenStartScreen(int waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(0);
     }
 }
